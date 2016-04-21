@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick(View v) {
         Button btn = (Button) v.findViewById(v.getId());
-        this.showMessage(btn.getText() + "Btn pressed");
+        this.showMessage("This button will launch my " + btn.getText() + "app!");
     }
 
     private void showMessage(String text) {
