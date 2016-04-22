@@ -23,37 +23,37 @@
             android:textSize="@dimen/title_text_size" />
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/start_project_1"
             style="@style/style_btn"
             android:onClick="onClick"
             android:text="@string/btn1_txt" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/start_project_2"
             style="@style/style_btn"
             android:onClick="onClick"
             android:text="@string/btn2_txt" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/start_project_3"
             style="@style/style_btn"
             android:onClick="onClick"
             android:text="@string/btn3_txt" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/start_project_4"
             style="@style/style_btn"
             android:onClick="onClick"
             android:text="@string/btn4_txt" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/start_project_5"
             style="@style/style_btn"
             android:onClick="onClick"
             android:text="@string/btn5_txt" />
 
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/start_project_6"
             style="@style/style_btn"
             android:onClick="onClick"
             android:text="@string/btn6_txt" />
