@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Project1</string>
+    <string name="menu_popular">Popular</string>
+    <string name="menu_users">Users rating</string>
 </resources>
