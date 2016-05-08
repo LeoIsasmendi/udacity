@@ -3,6 +3,7 @@ package com.example.android.project1;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,21 +21,24 @@ public class MainActivity extends AppCompatActivity {
 
         GridView gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new ImageAdapter(this));
+        gridview.setOnItemClickListener(itemClickListener());
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                Toast.makeText(MainActivity.this, "" + position,
-                        Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-                // TODO: send movie id and poster
-                startActivity(intent);
-
-            }
-        });
     }
 
+    private AdapterView.OnItemClickListener itemClickListener () {
+        AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                Toast.makeText(MainActivity.this, "" + id,
+                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+
+                // TODO: send movie object or params
+                startActivity(intent);
+            }
+        };
+        return listener;
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
