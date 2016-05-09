@@ -1,8 +1,5 @@
 package com.example.android.project1;
 
-import android.util.Log;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,6 +15,14 @@ public class MovieData {
     private String TAG_POSTER = "poster_path";
     private String TAG_ID = "id";
 
+    public MovieData() {
+        id = 0;
+        title = "";
+        original_title = "";
+        poster = "";
+        overview = "";
+        vote_average = 0f;
+    }
 
     public void loadData(JSONObject obj) {
         try {
@@ -43,5 +48,9 @@ public class MovieData {
         return this.poster;
     }
 
+    public String getOriginal_title() { return this.original_title; }
 
+    public String getOverview() { return this.overview; }
+
+    public Float getVote_average() { return  this.vote_average; }
 }
