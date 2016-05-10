@@ -1,11 +1,9 @@
 package com.example.android.project1;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 
 
@@ -58,7 +56,7 @@ public class ImageAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        Picasso.with(mContext).load("http://image.tmdb.org/t/p/w185/" + mThumbMovies[position].getPoster()).into(imageView);
+        Picasso.with(mContext).load(mThumbMovies[position].getPoster()).into(imageView);
         return imageView;
     }
 }

@@ -9,6 +9,10 @@ public class MovieData {
     private String overview;
     private Float vote_average;
 
+    // TODO: refactoring img attributes
+    private String imgBaseUrl;
+    private String imgSize;
+
     public MovieData() {
         id = 0;
         title = "";
@@ -16,6 +20,10 @@ public class MovieData {
         poster = "";
         overview = "";
         vote_average = 0f;
+
+        // TODO: refactoring img attributes
+        imgBaseUrl = "http://image.tmdb.org/t/p/";
+        imgSize = "w185/";
     }
 
     public MovieData (long id, String title, String poster ) {
@@ -45,7 +53,7 @@ public class MovieData {
     }
 
     public String getPoster() {
-        return this.poster;
+        return this.imgBaseUrl + this.imgSize + this.poster;
     }
 
     public String getOriginal_title() { return this.original_title; }
