@@ -14,6 +14,8 @@ public class JSONParser {
     private static final String TAG_POSTER = "poster_path";
     private static final String TAG_OVERVIEW = "overview";
     private static final String TAG_VOTE_AVERAGE = "vote_average";
+    private static final String TAG_RELEASE_DATE = "release_date";
+
 
     public MovieData parseMovie(JSONObject obj) {
         MovieData movie = new MovieData();
@@ -22,6 +24,7 @@ public class JSONParser {
         movie.setTitle(this.parseTitle(obj));
         movie.setOverview(this.parseOverview(obj));
         movie.setVoteAverage(this.parseVoteAverage(obj));
+        movie.setReleaseDate(this.parseReleaseDate(obj));
         return movie;
     }
 
@@ -77,6 +80,17 @@ public class JSONParser {
         } catch (JSONException e) {
             e.printStackTrace();
             return 0d;
+        }
+    }
+
+    private String parseReleaseDate(JSONObject obj) {
+        String date;
+        try {
+            date = obj.getString(TAG_RELEASE_DATE);
+            return date;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "";
         }
     }
 

@@ -22,13 +22,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Original title"/>
-        <RatingBar
-            android:layout_width="80dp"
-            android:layout_height="20dp"
-            android:numStars="4"
-            android:stepSize="1.0"
-            android:rating="2.0"
-            />
         <TextView
             android:id="@+id/rating"
             android:layout_width="wrap_content"
@@ -41,9 +34,9 @@
             android:text="Release data"/>
     </LinearLayout>
     <TextView
-        android:id="@+id/sinopsis"
+        android:id="@+id/synopsis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Sinopsis"/>
+        android:text="Synopsis"/>
 </RelativeLayout>

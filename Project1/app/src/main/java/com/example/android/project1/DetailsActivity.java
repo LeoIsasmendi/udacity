@@ -4,7 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -15,11 +18,10 @@ public class DetailsActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             setTitle(extras.getString("EXTRA_MOVIE_TITLE"));
-            setSinopsis(extras.getString("EXTRA_MOVIE_OVERVIEW"));
-/*            String title = extras.getString("EXTRA_MOVIE_TITLE");
-            String overview = extras.getString("EXTRA_MOVIE_OVERVIEW");
-            Double voteAverage = extras.getDouble("EXTRA_MOVIE_VOTE_AVERAGE");
-            Log.i("LEO",String.format("DetailsActivity TITLE = %s ; OVERVIEW = %s ; VOTE = %3$.2f", title, overview, voteAverage));*/
+            setSynopsis(extras.getString("EXTRA_MOVIE_OVERVIEW"));
+            setPoster(extras.getString("EXTRA_MOVIE_POSTER"));
+            setUserRating(extras.getDouble("EXTRA_MOVIE_VOTE_AVERAGE"));
+            setReleaseDate(extras.getString("EXTRA_MOVIE_RELEASE_DATE"));
         }
     }
 
@@ -28,9 +30,24 @@ public class DetailsActivity extends AppCompatActivity {
         title.setText(text);
     }
 
-    private void setSinopsis(String text) {
-        TextView sinopsis = (TextView)findViewById(R.id.sinopsis);
-        sinopsis.setText(text);
+    private void setSynopsis(String text) {
+        TextView synopsis = (TextView)findViewById(R.id.synopsis);
+        synopsis.setText(text);
+    }
+
+    private void setPoster(String text) {
+        ImageView imageView = (ImageView)findViewById(R.id.poster);
+        Picasso.with(getBaseContext()).load(text).into(imageView);
+    }
+
+    private void setUserRating(Double vote) {
+        TextView rating = (TextView)findViewById(R.id.rating);
+        rating.setText(String.format(" %1$.2f / 10", vote ));
+    }
+
+    private void setReleaseDate(String text) {
+        TextView date = (TextView)findViewById(R.id.released);
+        date.setText(text);
     }
 
 }

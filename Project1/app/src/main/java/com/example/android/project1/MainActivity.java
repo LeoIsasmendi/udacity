@@ -35,14 +35,15 @@ public class MainActivity extends AppCompatActivity {
     private AdapterView.OnItemClickListener itemClickListener () {
         AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Toast.makeText(MainActivity.this, "" + id,
-                        Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
                 MovieData movie = (MovieData)parent.getItemAtPosition(position);
 
                 intent.putExtra("EXTRA_MOVIE_TITLE", movie.getTitle());
                 intent.putExtra("EXTRA_MOVIE_OVERVIEW", movie.getOverview());
                 intent.putExtra("EXTRA_MOVIE_VOTE_AVERAGE", movie.getVoteAverage());
+                intent.putExtra("EXTRA_MOVIE_RELEASE_DATE", movie.getReleaseDate());
+                intent.putExtra("EXTRA_MOVIE_POSTER", movie.getPoster());
 
                 startActivity(intent);
             }

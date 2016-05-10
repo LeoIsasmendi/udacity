@@ -7,6 +7,7 @@ public class MovieData {
     private String original_title;
     private String poster;
     private String overview;
+    private String release_date;
     private Double vote_average;
 
     // TODO: refactoring img attributes
@@ -19,11 +20,13 @@ public class MovieData {
         original_title = "";
         poster = "";
         overview = "";
+        release_date = "";
         vote_average = 0d;
 
         // TODO: refactoring img attributes
         imgBaseUrl = "http://image.tmdb.org/t/p/";
         imgSize = "w185/";
+
     }
 
     public MovieData (long id, String title, String poster ) {
@@ -70,4 +73,14 @@ public class MovieData {
     public void setVoteAverage(Double voteAverage) {
         this.vote_average = voteAverage;
     }
+
+    public void setReleaseDate(String date) {
+        this.release_date = date;
+    }
+
+    public String getReleaseDate() {
+        return this.release_date;
+    }
+
+
 }
