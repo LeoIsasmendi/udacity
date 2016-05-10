@@ -7,7 +7,7 @@ public class MovieData {
     private String original_title;
     private String poster;
     private String overview;
-    private Float vote_average;
+    private Double vote_average;
 
     // TODO: refactoring img attributes
     private String imgBaseUrl;
@@ -19,7 +19,7 @@ public class MovieData {
         original_title = "";
         poster = "";
         overview = "";
-        vote_average = 0f;
+        vote_average = 0d;
 
         // TODO: refactoring img attributes
         imgBaseUrl = "http://image.tmdb.org/t/p/";
@@ -60,5 +60,14 @@ public class MovieData {
 
     public String getOverview() { return this.overview; }
 
-    public Float getVote_average() { return  this.vote_average; }
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public Double getVoteAverage() { return  this.vote_average; }
+
+
+    public void setVoteAverage(Double voteAverage) {
+        this.vote_average = voteAverage;
+    }
 }

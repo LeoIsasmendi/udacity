@@ -3,6 +3,7 @@ package com.example.android.project1;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,13 +34,16 @@ public class MainActivity extends AppCompatActivity {
 
     private AdapterView.OnItemClickListener itemClickListener () {
         AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Toast.makeText(MainActivity.this, "" + id,
                         Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                MovieData movie = (MovieData)parent.getItemAtPosition(position);
 
-                // TODO: send movie object or params
+                intent.putExtra("EXTRA_MOVIE_TITLE", movie.getTitle());
+                intent.putExtra("EXTRA_MOVIE_OVERVIEW", movie.getOverview());
+                intent.putExtra("EXTRA_MOVIE_VOTE_AVERAGE", movie.getVoteAverage());
+
                 startActivity(intent);
             }
         };
@@ -77,12 +81,8 @@ public class MainActivity extends AppCompatActivity {
     private void loadPopular() {
         // TODO: load popular movies
 
-        String baseUrl = "http://image.tmdb.org/t/p/";
-        String size = "w185";
-
-        String example = "http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg";
+//        String example = "http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg";
         String API_KEY = "78b685ac6e5ae6acfc568eb40c78b1f9";
-//        http://api.themoviedb.org/3/movie/popular?api_key=[API_KEY]
 //        http://api.themoviedb.org/3/movie/popular?api_key=78b685ac6e5ae6acfc568eb40c78b1f9
 
 
@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-
         // Access the RequestQueue through your singleton class.
         queue.add(jsObjRequest);
 
@@ -119,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         gridview.setAdapter(adapter);
         gridview.setOnItemClickListener(itemClickListener());
     }
+
     private void loadUsersRatings() {
         // TODO: load users ratings
     }
