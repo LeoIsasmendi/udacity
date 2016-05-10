@@ -26,21 +26,11 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     public Object getItem(int position) {
-        try {
-            return mThumbMovies[position];
-        } catch ( NullPointerException e ) {
-            e.printStackTrace();
-            return null;
-        }
+        return mThumbMovies[position];
     }
 
     public long getItemId(int position) {
-        try {
-            return mThumbMovies[position].getId();
-        } catch ( NullPointerException e ) {
-            e.printStackTrace();
-            return 0;
-        }
+        return mThumbMovies[position].getId();
     }
 
     // create a new ImageView for each item referenced by the Adapter
