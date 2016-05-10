@@ -1,6 +1,7 @@
 package com.example.android.project1;
 
 public class MovieData {
+
     private long id;
     private String title;
     private String original_title;
@@ -23,12 +24,24 @@ public class MovieData {
         this.poster = poster;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getTitle() {
         return this.title;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public long getId() {
         return this.id;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
     }
 
     public String getPoster() {
