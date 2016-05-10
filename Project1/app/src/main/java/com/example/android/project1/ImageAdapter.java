@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 
 
@@ -23,7 +24,6 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     public int getCount() {
-        Log.i("LEO : getCount ", String.format("length = %d", mThumbMovies.length) );
         return mThumbMovies.length;
     }
 
@@ -52,12 +52,12 @@ public class ImageAdapter extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView.setAdjustViewBounds(true);
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         } else {
             imageView = (ImageView) convertView;
         }
 
-        Log.i("LEO",String.format("getView :: length = %d :: position = %d", mThumbMovies.length, position));
         Picasso.with(mContext).load("http://image.tmdb.org/t/p/w185/" + mThumbMovies[position].getPoster()).into(imageView);
         return imageView;
     }
