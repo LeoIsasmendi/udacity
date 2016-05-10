@@ -39,37 +39,27 @@ public class JSONParser {
         }
     }
 
-    private String parsePoster(JSONObject obj) {
-        String poster;
+    private String parseString(String TAG, JSONObject obj) {
+        String result;
         try {
-            poster = obj.getString(TAG_POSTER);
-            return poster;
+            result = obj.getString(TAG);
+            return result;
         } catch (JSONException e) {
             e.printStackTrace();
             return "";
         }
+    }
+
+    private String parsePoster(JSONObject obj) {
+        return parseString(TAG_POSTER, obj);
     }
 
     private String parseTitle(JSONObject obj) {
-        String title;
-        try {
-            title = obj.getString(TAG_TITLE);
-            return title;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return "";
-        }
+        return parseString(TAG_TITLE, obj);
     }
 
     private String parseOverview(JSONObject obj) {
-        String overview;
-        try {
-            overview = obj.getString(TAG_OVERVIEW);
-            return overview;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return "";
-        }
+        return parseString(TAG_OVERVIEW, obj);
     }
 
     private Double parseVoteAverage(JSONObject obj) {
@@ -84,14 +74,7 @@ public class JSONParser {
     }
 
     private String parseReleaseDate(JSONObject obj) {
-        String date;
-        try {
-            date = obj.getString(TAG_RELEASE_DATE);
-            return date;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return "";
-        }
+        return parseString(TAG_RELEASE_DATE, obj);
     }
 
 
