@@ -5,6 +5,7 @@
     <!-- Font size -->
     <dimen name="detail_movie_title">18sp</dimen>
     <dimen name="detail_movie_synopsis">16sp</dimen>
+    <dimen name="detail_movie_synopsis_title">17sp</dimen>
     <dimen name="detail_movie_rating">17sp</dimen>
     <dimen name="detail_movie_released">17sp</dimen>
 

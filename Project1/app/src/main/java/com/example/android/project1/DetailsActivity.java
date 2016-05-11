@@ -42,12 +42,12 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void setUserRating(Double vote) {
         TextView rating = (TextView)findViewById(R.id.rating);
-        rating.setText(String.format(" %1$.2f / 10", vote ));
+        rating.setText(String.format("Rating: %1$.2f / 10", vote ));
     }
 
     private void setReleaseDate(String text) {
         TextView date = (TextView)findViewById(R.id.released);
-        date.setText(text);
+        date.setText("Released: "+text);
     }
 
 }
