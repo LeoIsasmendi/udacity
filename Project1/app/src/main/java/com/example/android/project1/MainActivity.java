@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,12 +23,15 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 
     private JSONParser parser;
+    private String API_KEY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.parser = new JSONParser();
+        API_KEY = "78b685ac6e5ae6acfc568eb40c78b1f9";
+//example:        http://api.themoviedb.org/3/movie/popular?api_key=78b685ac6e5ae6acfc568eb40c78b1f9
     }
 
     private AdapterView.OnItemClickListener itemClickListener () {
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         };
         return listener;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -72,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -80,17 +82,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadPopular() {
-        // TODO: load popular movies
-
-//        String example = "http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg";
-        String API_KEY = "78b685ac6e5ae6acfc568eb40c78b1f9";
-//        http://api.themoviedb.org/3/movie/popular?api_key=78b685ac6e5ae6acfc568eb40c78b1f9
-
-
         String url = "http://api.themoviedb.org/3/movie/popular?api_key="+API_KEY;
-
         RequestQueue queue = Volley.newRequestQueue(this);
-
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, new Response.Listener<JSONObject>() {
 
@@ -109,8 +102,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Access the RequestQueue through your singleton class.
         queue.add(jsObjRequest);
-
-
     }
 
     private void processingPopular(JSONObject response) {
@@ -121,6 +112,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadUsersRatings() {
-        // TODO: load users ratings
+        String url = "http://api.themoviedb.org/3/movie/top_rated?api_key="+API_KEY;
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        processingTopRated(response);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });
+        // Access the RequestQueue through your singleton class.
+        queue.add(jsObjRequest);
+    }
+
+    private void processingTopRated(JSONObject response) {
+        ImageAdapter adapter = new ImageAdapter(this, parser.parseMoviesData(response));
+        GridView gridview = (GridView) findViewById(R.id.gridview);
+        gridview.setAdapter(adapter);
+        gridview.setOnItemClickListener(itemClickListener());
     }
 }
