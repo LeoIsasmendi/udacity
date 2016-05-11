@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,9 +30,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.parser = new JSONParser();
+        parser = new JSONParser();
         API_KEY = "78b685ac6e5ae6acfc568eb40c78b1f9";
-//example:        http://api.themoviedb.org/3/movie/popular?api_key=78b685ac6e5ae6acfc568eb40c78b1f9
     }
 
     private AdapterView.OnItemClickListener itemClickListener () {
@@ -80,7 +78,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        loadPopular();
+        if(gridState == null) {
+            loadPopular();
+        }
     }
 
     @Override
@@ -91,30 +91,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadPopular() {
-        String url = "http://api.themoviedb.org/3/movie/popular?api_key="+API_KEY;
-        RequestQueue queue = Volley.newRequestQueue(this);
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, url, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        processingResponse(response);
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
-
-                    }
-                });
-
-        // Access the RequestQueue through your singleton class.
-        queue.add(jsObjRequest);
+        loadData("popular");
     }
 
     private void loadUsersRatings() {
-        String url = "http://api.themoviedb.org/3/movie/top_rated?api_key="+API_KEY;
+        loadData("top_rated");
+    }
+
+    private void loadData(String category) {
+        String url = "http://api.themoviedb.org/3/movie/"+category+"?api_key="+API_KEY;
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, new Response.Listener<JSONObject>() {
@@ -134,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
         // Access the RequestQueue through your singleton class.
         queue.add(jsObjRequest);
     }
-
     private void processingResponse(JSONObject response) {
         ImageAdapter adapter = new ImageAdapter(this, parser.parseMoviesData(response));
         GridView gridview = (GridView) findViewById(R.id.gridview);
