@@ -1,6 +1,7 @@
 package com.example.android.project1;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,7 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Parcelable gridState;
     private JSONParser parser;
     private String API_KEY;
 
@@ -81,6 +83,13 @@ public class MainActivity extends AppCompatActivity {
         loadPopular();
     }
 
+    @Override
+    protected void onPause() {
+        GridView gridview = (GridView) findViewById(R.id.gridview);
+        gridState = gridview.onSaveInstanceState();
+        super.onPause();
+    }
+
     private void loadPopular() {
         String url = "http://api.themoviedb.org/3/movie/popular?api_key="+API_KEY;
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -89,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        processingPopular(response);
+                        processingResponse(response);
                     }
                 }, new Response.ErrorListener() {
 
@@ -102,13 +111,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Access the RequestQueue through your singleton class.
         queue.add(jsObjRequest);
-    }
-
-    private void processingPopular(JSONObject response) {
-        ImageAdapter adapter = new ImageAdapter(this, parser.parseMoviesData(response));
-        GridView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(adapter);
-        gridview.setOnItemClickListener(itemClickListener());
     }
 
     private void loadUsersRatings() {
@@ -119,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        processingTopRated(response);
+                        processingResponse(response);
                     }
                 }, new Response.ErrorListener() {
 
@@ -133,10 +135,14 @@ public class MainActivity extends AppCompatActivity {
         queue.add(jsObjRequest);
     }
 
-    private void processingTopRated(JSONObject response) {
+    private void processingResponse(JSONObject response) {
         ImageAdapter adapter = new ImageAdapter(this, parser.parseMoviesData(response));
         GridView gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(adapter);
+        // Restore previous state (including selected item index and scroll position)
+        if(gridState != null) {
+            gridview.onRestoreInstanceState(gridState);
+        }
         gridview.setOnItemClickListener(itemClickListener());
     }
 }
