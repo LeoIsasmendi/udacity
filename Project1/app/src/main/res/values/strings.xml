@@ -2,4 +2,10 @@
     <string name="app_name">Project1</string>
     <string name="menu_popular">Popular</string>
     <string name="menu_users">Users rating</string>
+    <string name="original_title">Original title</string>
+    <string name="rating">Rating</string>
+    <string name="release_data">Release data</string>
+    <string name="synopsis">Synopsis</string>
+
+
 </resources>
