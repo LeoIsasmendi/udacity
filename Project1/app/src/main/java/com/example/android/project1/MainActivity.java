@@ -44,12 +44,17 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
                 MovieData movie = (MovieData)parent.getItemAtPosition(position);
 
-                intent.putExtra("EXTRA_MOVIE_TITLE", movie.getTitle());
-                intent.putExtra("EXTRA_MOVIE_OVERVIEW", movie.getOverview());
-                intent.putExtra("EXTRA_MOVIE_VOTE_AVERAGE", movie.getVoteAverage());
-                intent.putExtra("EXTRA_MOVIE_RELEASE_DATE", movie.getReleaseDate());
-                intent.putExtra("EXTRA_MOVIE_POSTER", movie.getPoster());
+                // in CollectDataActivity, populate the Parcelable User object using its setter methods
 
+                MovieDataParcelable data = new MovieDataParcelable();
+                data.setTitle(movie.getTitle());
+                data.setOverview(movie.getOverview());
+                data.setVoteAverage(movie.getVoteAverage());
+                data.setReleaseDate(movie.getReleaseDate());
+                data.setPoster(movie.getPoster());
+
+                // pass it to another component
+                intent.putExtra("data", data);
                 startActivity(intent);
             }
         };

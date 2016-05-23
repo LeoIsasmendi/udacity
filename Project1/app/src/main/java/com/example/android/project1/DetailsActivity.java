@@ -15,13 +15,13 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-        Bundle extras = getIntent().getExtras();
+        MovieDataParcelable extras = getIntent().getParcelableExtra("data");
         if (extras != null) {
-            setTitle(extras.getString("EXTRA_MOVIE_TITLE"));
-            setSynopsis(extras.getString("EXTRA_MOVIE_OVERVIEW"));
-            setPoster(extras.getString("EXTRA_MOVIE_POSTER"));
-            setUserRating(extras.getDouble("EXTRA_MOVIE_VOTE_AVERAGE"));
-            setReleaseDate(extras.getString("EXTRA_MOVIE_RELEASE_DATE"));
+            setTitle(extras.getTitle());
+            setSynopsis(extras.getOverview());
+            setPoster(extras.getPoster());
+            setUserRating(extras.getVoteAverage());
+            setReleaseDate(extras.getReleaseDate());
         }
     }
 
