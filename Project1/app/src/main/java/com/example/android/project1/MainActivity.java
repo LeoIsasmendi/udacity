@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         parser = new JSONParser();
-        API_KEY = "78b685ac6e5ae6acfc568eb40c78b1f9";
+        API_KEY = "";
     }
 
     private AdapterView.OnItemClickListener itemClickListener () {
@@ -66,25 +66,25 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.popular_movies:
-                savePreferences(getString(R.string.app_preferences_op1));
-                loadData();
+                setPreferences(getString(R.string.app_preferences_op1));
+                loadData(getPreferences());
                 return true;
             case R.id.users_movies:
-                savePreferences(getString(R.string.app_preferences_op2));
-                loadData();
+                setPreferences(getString(R.string.app_preferences_op2));
+                loadData(getPreferences());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void savePreferences(String string) {
+    private void setPreferences(String string) {
         SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.app_preferences_file), MODE_PRIVATE).edit();
         editor.putString("saved_selected_category", string);
         editor.commit();
     }
 
-    public String getSavedPreferences() {
+    public String getPreferences() {
         SharedPreferences prefs = getSharedPreferences(getString(R.string.app_preferences_file), MODE_PRIVATE);
         String defaultValue = getString(R.string.saved_default_category);
         String savedPreferences = prefs.getString("saved_selected_category", defaultValue);
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        loadData();
+        loadData(getPreferences());
     }
 
     @Override
@@ -111,9 +111,6 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    private void loadData() {
-        loadData(getSavedPreferences());
-    }
     private void loadData(String category) {
         String url = "http://api.themoviedb.org/3/movie/"+category+"?api_key="+API_KEY;
         RequestQueue queue = Volley.newRequestQueue(this);
