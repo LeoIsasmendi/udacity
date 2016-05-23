@@ -6,6 +6,9 @@
     <string name="rating">Rating</string>
     <string name="release_data">Release data</string>
     <string name="synopsis">Synopsis</string>
-
-
+    <string name="app_preferences_file">preferences</string>
+    <string name="saved_default_category">popular</string>
+    <string name="saved_selected_category"></string>
+    <string name="app_preferences_op1">popular</string>
+    <string name="app_preferences_op2">top_rated</string>
 </resources>

@@ -1,9 +1,12 @@
 package com.example.android.project1;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -56,16 +59,32 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
+
         switch (item.getItemId()) {
             case R.id.popular_movies:
-                loadPopular();
+                savePreferences(getString(R.string.app_preferences_op1));
+                loadData();
                 return true;
             case R.id.users_movies:
-                loadUsersRatings();
+                savePreferences(getString(R.string.app_preferences_op2));
+                loadData();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void savePreferences(String string) {
+        SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.app_preferences_file), MODE_PRIVATE).edit();
+        editor.putString("saved_selected_category", string);
+        editor.commit();
+    }
+
+    public String getSavedPreferences() {
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.app_preferences_file), MODE_PRIVATE);
+        String defaultValue = getString(R.string.saved_default_category);
+        String savedPreferences = prefs.getString("saved_selected_category", defaultValue);
+        return savedPreferences;
     }
 
     @Override
@@ -78,9 +97,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(gridState == null) {
-            loadPopular();
-        }
+        loadData();
     }
 
     @Override
@@ -90,14 +107,9 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    private void loadPopular() {
-        loadData("popular");
+    private void loadData() {
+        loadData(getSavedPreferences());
     }
-
-    private void loadUsersRatings() {
-        loadData("top_rated");
-    }
-
     private void loadData(String category) {
         String url = "http://api.themoviedb.org/3/movie/"+category+"?api_key="+API_KEY;
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -129,4 +141,5 @@ public class MainActivity extends AppCompatActivity {
         }
         gridview.setOnItemClickListener(itemClickListener());
     }
+
 }
