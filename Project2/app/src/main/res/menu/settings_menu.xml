@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:id="@+id/popular_movies"
+    android:title="@string/menu_popular"/>
+<item android:id="@+id/users_movies"
+    android:title="@string/menu_users" />
+<item android:id="@+id/favorites_movies"
+        android:title="@string/menu_favorites" />
+</menu>

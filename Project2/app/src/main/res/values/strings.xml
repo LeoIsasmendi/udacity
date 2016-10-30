@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Project2</string>
+    <string name="menu_popular">Popular</string>
+    <string name="menu_users">Users rating</string>
+    <string name="menu_favorites">Favoritos</string>
+    <string name="original_title">Original title</string>
+    <string name="rating">Rating</string>
+    <string name="reviews">Reviews</string>
+    <string name="release_data">Release data</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="app_preferences_file">preferences</string>
+    <string name="saved_default_category">popular</string>
+    <string name="saved_selected_category"></string>
+    <string name="app_preferences_op1">popular</string>
+    <string name="app_preferences_op2">top_rated</string>
+    <string name="app_preferences_op3">favorites</string>
+    <string name="btn_text">Favorito</string>
+    <string name="empty_reviews">No reviews</string>
+    <string name="trailers">Trailers</string>
+    <string name="error_trailers">Unable to play Trailer</string>
+    <string name="empty_trailers">No trailer available</string>
+    <string name="no_data_available">No movies available</string>
+</resources>
