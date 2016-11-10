@@ -1,0 +1,41 @@
+<resources>
+    <!-- fragment detail -->
+    <dimen name="detail_title_text_size">32sp</dimen>
+    <dimen name="detail_body_text_size">22sp</dimen>
+    <item name="detail_body_line_spacing_multiplier" format="float" type="fraction">1.25</item>
+
+    <dimen name="fab_elevation">6dp</dimen>
+    <dimen name="fab_size">56dp</dimen>
+    <dimen name="fab_press_translation_z">6dp</dimen>
+    <dimen name="fab_margin">24dp</dimen>
+
+    <dimen name="max_width_linear_layout_elevation">2dp</dimen>
+
+
+
+    <!--item article-->
+    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="card_layout_margin">8dp</dimen>
+
+    <dimen name="network_image_size">100dp</dimen>
+
+    <dimen name="article_padding">16dp</dimen>
+
+    <integer name="article_title_max_line">4</integer>
+    <dimen name="article_title_padding_bottom">4dp</dimen>
+
+    <integer name="article_subtitle_max_line">1</integer>
+
+    <!--article list-->
+    <dimen name="app_bar_elevation">4dp</dimen>
+
+    <dimen name="recycler_padding_button">28dp</dimen>
+    <dimen name="recycler_padding_top">2dp</dimen>
+
+    <dimen name="toolbar_height">106dp</dimen>
+    <dimen name="toolbar_min_height">60dp</dimen>
+    <dimen name="toolbar_logo_margin_bottom">8dp</dimen>
+
+    <!--article detail-->
+    <dimen name="action_up_width">56dp</dimen>
+</resources>

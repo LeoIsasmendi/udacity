@@ -1,0 +1,54 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:elevation="@dimen/card_elevation"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/card_layout_margin"
+    android:layout_marginLeft="@dimen/card_layout_margin"
+    android:layout_marginRight="@dimen/card_layout_margin"
+    android:layout_marginTop="@dimen/card_layout_margin"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!--suppress AndroidLintContentDescription -->
+        <com.example.xyzreader.ui.DynamicHeightNetworkImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:theme="@style/AppTheme.Thumbail" />
+
+        <TextView
+            android:id="@+id/article_title"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="@integer/article_title_max_line"
+            android:paddingBottom="@dimen/article_title_padding_bottom"
+            android:paddingLeft="@dimen/article_padding"
+            android:paddingRight="@dimen/article_padding"
+            android:paddingTop="@dimen/article_padding"
+            android:theme="@style/AppTheme.Title"
+            tools:text="Article Title" />
+
+        <TextView
+            android:id="@+id/article_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="@integer/article_subtitle_max_line"
+            android:paddingBottom="@dimen/article_padding"
+            android:paddingLeft="@dimen/article_padding"
+            android:paddingRight="@dimen/article_padding"
+            android:singleLine="true"
+            tools:text="Article subtitle" />
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
