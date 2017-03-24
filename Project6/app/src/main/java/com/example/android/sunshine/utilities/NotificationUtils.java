@@ -9,14 +9,27 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import com.example.android.sunshine.DetailActivity;
 import com.example.android.sunshine.R;
 import com.example.android.sunshine.data.SunshinePreferences;
 import com.example.android.sunshine.data.WeatherContract;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.wearable.Asset;
+import com.google.android.gms.wearable.DataApi;
+import com.google.android.gms.wearable.PutDataMapRequest;
+import com.google.android.gms.wearable.PutDataRequest;
+import com.google.android.gms.wearable.Wearable;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public class NotificationUtils {
 
@@ -130,6 +143,7 @@ public class NotificationUtils {
             /* WEATHER_NOTIFICATION_ID allows you to update or cancel the notification later on */
             notificationManager.notify(WEATHER_NOTIFICATION_ID, notificationBuilder.build());
 
+            notifyWear(context, BitmapFactory.decodeResource(resources, smallArtResourceId),high,low);
             /*
              * Since we just showed a notification, save the current time. That way, we can check
              * next time the weather is refreshed if we should show another notification.
@@ -139,6 +153,72 @@ public class NotificationUtils {
 
         /* Always close your cursor when you're done with it to avoid wasting resources. */
         todayWeatherCursor.close();
+    }
+
+    private static void notifyWear(Context context, Bitmap bitmap, double high, double low) {
+        final GoogleApiClient mGoogleApiClient;
+
+
+
+        final String WEATHER_PATH = "/weather";
+        final String HIGH_TEMP_KEY= "high_temp_key";
+        final String LOW_TEMP_KEY = "low_temp_key";
+        final String ICON_KEY = "icon_key";
+
+        mGoogleApiClient = new GoogleApiClient.Builder(context)
+                .addApi(Wearable.API)
+                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+                    @Override
+                    public void onConnected(@Nullable Bundle bundle) {
+                        Log.d("WearApp","connect");
+                    }
+
+                    @Override
+                    public void onConnectionSuspended(int i) {
+
+                    }
+                }).build();
+
+        mGoogleApiClient.connect();
+
+        Asset assetWeather = createAssetFromBitmap(Bitmap.createScaledBitmap(bitmap,52,52,true));
+
+        PutDataMapRequest putDataMapRequest = PutDataMapRequest.create(WEATHER_PATH);
+        putDataMapRequest.setUrgent();
+        putDataMapRequest.getDataMap().putString(HIGH_TEMP_KEY, SunshineWeatherUtils.formatTemperature(context, high));
+        Log.d("high temp",SunshineWeatherUtils.formatTemperature(context,high));
+        putDataMapRequest.getDataMap().putString(LOW_TEMP_KEY, SunshineWeatherUtils.formatTemperature(context, low));
+        putDataMapRequest.getDataMap().putAsset(ICON_KEY, assetWeather);
+        putDataMapRequest.getDataMap().putLong("timestamp", System.currentTimeMillis());
+
+        PutDataRequest request = putDataMapRequest.asPutDataRequest();
+        Wearable.DataApi.putDataItem(mGoogleApiClient, request).setResultCallback(new ResultCallback<DataApi.DataItemResult>() {
+            @Override
+            public void onResult(DataApi.DataItemResult dataItemResult) {
+                if (dataItemResult.getStatus().isSuccess()) {
+                    Log.e("Watch Log", "Successfully send weather info");
+                } else {
+                    Log.e("Watch Log", "Failed to send weather info ");
+                }
+            }
+        });
+    }
+
+    private static Asset createAssetFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream byteStream = null;
+        try {
+            byteStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteStream);
+            return Asset.createFromBytes(byteStream.toByteArray());
+        } finally {
+            if (null != byteStream) {
+                try {
+                    byteStream.close();
+                } catch (IOException e) {
+                    // ignore
+                }
+            }
+        }
     }
 
     /**
