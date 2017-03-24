@@ -58,6 +58,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -113,6 +114,10 @@ public class MyWatchFace extends CanvasWatchFaceService {
         boolean mRegisteredTimeZoneReceiver = false;
         Paint mBackgroundPaint;
         Paint mTextPaint;
+        Paint mMaxTemp;
+        Paint mMinTemp;
+        Paint mNoInfo;
+
         boolean mAmbient;
         Calendar mCalendar;
         final BroadcastReceiver mTimeZoneReceiver = new BroadcastReceiver() {
@@ -202,10 +207,19 @@ public class MyWatchFace extends CanvasWatchFaceService {
             mYOffset = resources.getDimension(R.dimen.digital_y_offset);
 
             mBackgroundPaint = new Paint();
-            mBackgroundPaint.setColor(resources.getColor(R.color.background));
+            mBackgroundPaint.setColor(resources.getColor(R.color.colorPrimary));
 
             mTextPaint = new Paint();
             mTextPaint = createTextPaint(resources.getColor(R.color.digital_text));
+
+            mMaxTemp = new Paint();
+            mMaxTemp = createTextPaint(resources.getColor(R.color.white));
+
+            mMinTemp = new Paint();
+            mMinTemp = createTextPaint(resources.getColor(R.color.colorPrimaryLight));
+
+            mNoInfo = new Paint();
+            mNoInfo = createTextPaint(resources.getColor(R.color.white));
 
             mCalendar = Calendar.getInstance();
 
@@ -289,7 +303,11 @@ public class MyWatchFace extends CanvasWatchFaceService {
             float textSize = resources.getDimension(isRound
                     ? R.dimen.digital_text_size_round : R.dimen.digital_text_size);
 
+            float textSizeDate = resources.getDimension(R.dimen.digital_text_size_date);
             mTextPaint.setTextSize(textSize);
+            mNoInfo.setTextSize(resources.getDimension(R.dimen.no_info));
+            mMaxTemp.setTextSize(textSizeDate);
+            mMinTemp.setTextSize(textSizeDate);
         }
 
         @Override
@@ -357,11 +375,36 @@ public class MyWatchFace extends CanvasWatchFaceService {
             mCalendar.setTimeInMillis(now);
 
             String text = mAmbient
-                    ? String.format("%d:%02d", mCalendar.get(Calendar.HOUR),
+                    ? String.format(Locale.US, "%d:%02d", mCalendar.get(Calendar.HOUR),
                     mCalendar.get(Calendar.MINUTE))
-                    : String.format("%d:%02d:%02d", mCalendar.get(Calendar.HOUR),
+                    : String.format(Locale.US, "%d:%02d:%02d", mCalendar.get(Calendar.HOUR),
                     mCalendar.get(Calendar.MINUTE), mCalendar.get(Calendar.SECOND));
             canvas.drawText(text, mXOffset, mYOffset, mTextPaint);
+
+            float width;
+            float x = bounds.width() / 2f;
+            float y = bounds.height() / 2f;
+
+            if (maxTemp != null && minTemp != null) {
+
+                float tempY = y + 50;
+
+                width = mMaxTemp.measureText(maxTemp);
+                canvas.drawText(maxTemp, x - width / 2f, tempY, mMaxTemp);
+
+                float lowTempX = x + 20;
+                canvas.drawText(minTemp, lowTempX, tempY , mMinTemp);
+
+                if (weatherIcon!=null){
+                    canvas.drawBitmap(weatherIcon, x - 80 , tempY - 30, null);
+                }
+            }else {
+                float tempY = y + 40;
+                String no_information  = getResources().getString(R.string.no_information);
+                width = mNoInfo.measureText(no_information);
+                canvas.drawText(no_information, x - width / 2f, tempY, mNoInfo);
+            }
+
         }
 
         /**
